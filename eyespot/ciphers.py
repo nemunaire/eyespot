@@ -6,6 +6,7 @@ import ssl
 import subprocess
 import sys
 
+_cipher_cache = dict()
 
 def get(subset="ALL:COMPLEMENTOFALL"):
     """Ask OpenSSL a list of ciphers
@@ -14,12 +15,16 @@ def get(subset="ALL:COMPLEMENTOFALL"):
     subset -- an openssl cipher list format string
     """
 
+    if subset in _cipher_cache:
+        return _cipher_cache[subset]
+
     ciphers = []
     with subprocess.Popen(["openssl", "ciphers", subset],
                           stdout=subprocess.PIPE) as raw_ciphers:
         ciphers = re.findall(r"[^:]+",
                              raw_ciphers.stdout.read().strip().decode())
 
+    _cipher_cache[subset] = ciphers
     return ciphers
 
 
