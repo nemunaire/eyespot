@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 
-def get(subset="ALL"):
+def get(subset="ALL:COMPLEMENTOFALL"):
     """Ask OpenSSL a list of ciphers
 
     Keyword argument:
