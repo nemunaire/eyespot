@@ -48,3 +48,17 @@ def test(host, cipher):
         except ConnectionResetError:
             pass
     return False
+
+
+def weakness_level(cipher):
+    wl = [
+        "aNULL:eNULL",
+        "EXPORT",
+        "LOW",
+        "MEDIUM",
+        "HIGH"
+    ]
+    for i in range(len(wl)):
+        if cipher in get(wl[i]):
+            return i + 1
+    return 0
